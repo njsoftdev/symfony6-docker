@@ -1,0 +1,3 @@
+#!/bin/bash
+
+export APP_USER_UID=$UID && docker-compose up -d

@@ -1,0 +1,6 @@
+.idea
+db
+docker-compose.override.yaml
+dockerfiles/app/1.0/docker/php/symfony
+dockerfiles/app/1.0/docker/php/LICENSE
+dockerfiles/app/1.0/docker/php/README.md
