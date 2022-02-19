@@ -37,4 +37,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.66.77.0/24
+        - subnet: 172.66.77.0/24 # because our app will work in 172.66.77.1 - 172.66.77.254 inner netowrk

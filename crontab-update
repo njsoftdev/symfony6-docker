@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker exec app_sf_1 /bin/sh -c 'cat /var/www/html/app1/.crontab | crontab -u app -'

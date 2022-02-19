@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker exec --user app -it app_sf_1 /bin/sh

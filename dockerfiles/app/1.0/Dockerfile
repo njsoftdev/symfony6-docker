@@ -2,7 +2,7 @@
 FROM php:8.0.2-fpm-alpine AS php_nginx
 
 # nginx + supervisor
-RUN apk add --no-cache nginx supervisor
+RUN apk add --no-cache nginx supervisor wget tzdata
 
 COPY ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/supervisor/supervisord.conf /etc/supervisord.conf
@@ -15,6 +15,7 @@ RUN apk add --no-cache \
 		gettext \
 		git \
 		gnu-libiconv \
+        wget \
 	;
 
 # install gnu-libiconv and set LD_PRELOAD env to make iconv work fully on Alpine image.
@@ -27,6 +28,7 @@ RUN set -eux; \
 		icu-dev \
 		libzip-dev \
 		zlib-dev \
+		postgresql-dev \
 	; \
 	\
 	docker-php-ext-configure zip; \
@@ -35,6 +37,7 @@ RUN set -eux; \
 		zip \
         iconv \
         pdo_mysql \
+        pdo_pgsql \
 	; \
 	pecl install \
 		apcu-5.1.21 \
@@ -82,7 +85,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     mv composer.phar /usr/local/bin/composer
 
 # Install symfony-cli
-COPY docker/php/symfony /usr/local/bin/symfony
+RUN wget -O sf-cli.tar.gz https://github.com/symfony-cli/symfony-cli/releases/download/v5.3.4/symfony-cli_linux_amd64.tar.gz && \
+        tar -xvf ./sf-cli.tar.gz && \
+        mv symfony /usr/local/bin/symfony
 
 WORKDIR "/var/www/html"
 
